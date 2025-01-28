@@ -2,180 +2,61 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlipBook - By Roko Buljan</title>
-    <link rel="stylesheet" href="index.css">
-    <link rel="shortcut icon" href="#!" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logo Splash Screen</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #5DB6BC;
+    }
+
+    .splash-screen {
+      text-align: center;
+      background-color: #fff;
+      border-radius: 50%;
+      padding: 50px;
+      animation: fadeIn 1.5s ease forwards;
+    }
+
+    .logo {
+      width: 150px;
+      height: 150px;
+    }
+
+    .message {
+      font-size: 24px;
+      margin-top: 20px;
+      color: #333;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <div class="splash-screen">
+    <img src="images/logo-top.png" alt="Logo" class="logo">
+  </div>
 
-    <div class="toolbar">
-        <button id="pencilButton">✏️ Pencil</button>
-        <button id="eraserButton">🩹 Eraser</button>
-    </div>
-
-
-    <div class="book">
-        <div class="page">
-            <div class="front">
-                <img src="books/Abelling/2.jpg" alt="" />
-            </div>
-            <div class="back">
-                <img src="books/Abelling/3.jpg" alt="" />
-            </div>
-        </div>
-
-        <div class="page">
-            <div class="front">
-                <img src="books/Abelling/4.jpg" alt="" />
-            </div>
-            <div class="back">
-                <img src="books/Abelling/5.jpg" alt="" />
-            </div>
-        </div>
-
-        <div class="page">
-            <div class="front">
-                <img src="books/Abelling/6.jpg" alt="" />
-            </div>
-            <div class="back">
-                <img src="books/Abelling/7.jpg" alt="" />
-            </div>
-        </div>
-
-        <div class="page">
-            <div class="front">
-                <img src="books/Abelling/8.jpg" alt="" />
-            </div>
-            <div class="back">
-                <img src="books/Abelling/9.jpg" alt="" />
-            </div>
-        </div>
-
-        <div class="page">
-            <div class="front">
-                <img src="books/Abelling/10.jpg" alt="" />
-            </div>
-            <div class="back">
-                <img src="books/Abelling/11.jpg" alt="" />
-            </div>
-        </div>
-
-        <div class="page">
-            <div class="front">
-                <img src="books/Abelling/12.jpg" alt="" />
-            </div>
-            <div class="back">
-                <img src="books/Abelling/13.jpg" alt="" />
-            </div>
-        </div>
-
-        <div class="page">
-            <div class="front">
-                <img src="books/Abelling/14.jpg" alt="" />
-            </div>
-            <div class="back">
-                <img src="books/Abelling/15.jpg" alt="" />
-            </div>
-        </div>
-
-        <div class="page">
-            <div class="front">
-                <img src="books/Abelling/16.jpg" alt="" />
-            </div>
-            <div class="back">
-                <img src="books/Abelling/17.jpg" alt="" />
-            </div>
-        </div>
-
-        <div class="page">
-            <div class="front">
-                <img src="books/Abelling/18.jpg" alt="" />
-            </div>
-            <div class="back">
-                <img src="books/Abelling/19.jpg" alt="" />
-            </div>
-        </div>
-
-        <div class="page">
-            <div class="front">
-                <img src="books/Abelling/20.jpg" alt="" />
-            </div>
-            <div class="back">
-                <img src="books/Abelling/21.jpg" alt="" />
-            </div>
-        </div>
-
-        <div class="page">
-            <div class="front">
-                <img src="books/Abelling/22.jpg" alt="" />
-            </div>
-            <div class="back">
-                <img src="books/Abelling/23.jpg" alt="" />
-            </div>
-        </div>
-
-        <div class="page">
-            <div class="front">
-                <img src="books/Abelling/24.jpg" alt="" />
-            </div>
-            <div class="back">
-                <img src="books/Abelling/25.jpg" alt="" />
-            </div>
-        </div>
-
-        <div class="page">
-            <div class="front">
-                <img src="books/Abelling/26.jpg" alt="" />
-            </div>
-            <div class="back">
-                <img src="books/Abelling/27.jpg" alt="" />
-            </div>
-        </div>
-
-        <div class="page">
-            <div class="front">
-                <img src="books/Abelling/28.jpg" alt="" />
-            </div>
-            <div class="back">
-                <img src="books/Abelling/29.jpg" alt="" />
-            </div>
-        </div>
-
-        <div class="page">
-            <div class="front">
-                <img src="books/Abelling/30.jpg" alt="" />
-            </div>
-            <div class="back">
-                <img src="books/Abelling/31.jpg" alt="" />
-            </div>
-        </div>
-
-        <div class="page">
-            <div class="front">
-                <img src="books/Abelling/32.jpg" alt="" />
-            </div>
-            <div class="back">
-                <img src="books/Abelling/33.jpg" alt="" />
-            </div>
-        </div>
-
-        <div class="page">
-            <div class="front">
-                <img src="books/Abelling/34.jpg" alt="" />
-            </div>
-            <div class="back">
-                <img src="books/Abelling/35.jpg" alt="" />
-            </div>
-        </div>
-        
-    </div>
-
-    <canvas id="drawingCanvas"></canvas>
-
-    <script src="index.js"></script>
+  <script>
+    setTimeout(function () {
+      window.location.href = "select.html";
+    }, 1500); 
+  </script>
 </body>
 
 </html>
