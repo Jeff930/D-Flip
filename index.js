@@ -12,7 +12,6 @@ const flipBook = (elBook) => {
 
 document.querySelectorAll(".book").forEach(flipBook);
 
-
 const pencilButton = document.getElementById('pencilButton');
 const eraserButton = document.getElementById('eraserButton');
 const canvas = document.getElementById('drawingCanvas');
@@ -22,8 +21,6 @@ const ctx = canvas.getContext('2d');
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    ctx.fillStyle = 'white'; // Set canvas background color
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
@@ -42,7 +39,6 @@ pencilButton.addEventListener('click', () => {
     eraserButton.textContent = '🩹 Eraser'; // Reset eraser button text
 });
 
-// Eraser button toggle
 eraserButton.addEventListener('click', () => {
     eraserEnabled = !eraserEnabled;
     pencilEnabled = false;
@@ -57,26 +53,25 @@ canvas.addEventListener('mousedown', (e) => {
     drawing = true;
     ctx.beginPath();
     ctx.moveTo(e.clientX, e.clientY);
+
+    // Set drawing mode
+    ctx.globalCompositeOperation = eraserEnabled ? 'destination-out' : 'source-over';
+    ctx.lineWidth = eraserEnabled ? 20 : 2; // Eraser is larger
+    ctx.strokeStyle = eraserEnabled ? 'rgba(0,0,0,1)' : 'black'; // Eraser doesn't matter here
+    ctx.lineCap = 'round';
 });
 
 canvas.addEventListener('mousemove', (e) => {
     if (drawing) {
         ctx.lineTo(e.clientX, e.clientY);
-        ctx.strokeStyle = eraserEnabled ? 'white' : 'black'; // Erase or draw
-        ctx.lineWidth = eraserEnabled ? 20 : 2; // Eraser is larger
-        ctx.lineCap = 'round';
         ctx.stroke();
     }
 });
 
 canvas.addEventListener('mouseup', () => {
-    if (drawing) {
-        drawing = false;
-    }
+    drawing = false;
 });
 
 canvas.addEventListener('mouseout', () => {
-    if (drawing) {
-        drawing = false;
-    }
+    drawing = false;
 });
