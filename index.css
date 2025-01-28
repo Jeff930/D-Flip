@@ -75,12 +75,13 @@ body {
     z-index: 10;
 }
 
-#pencilButton {
+#pencilButton, #eraserButton {
     background: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
     cursor: pointer;
+    font-size: 10px;
 }
 
 /* Canvas overlay styles */

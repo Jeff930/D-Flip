@@ -13,6 +13,7 @@ const flipBook = (elBook) => {
 document.querySelectorAll(".book").forEach(flipBook);
 
 const pencilButton = document.getElementById('pencilButton');
+const eraserButton = document.getElementById('eraserButton');
 const canvas = document.getElementById('drawingCanvas');
 const ctx = canvas.getContext('2d');
 
@@ -27,38 +28,50 @@ window.addEventListener('resize', resizeCanvas);
 // Drawing state
 let drawing = false;
 let pencilEnabled = false;
+let eraserEnabled = false;
 
+// Pencil button toggle
 pencilButton.addEventListener('click', () => {
     pencilEnabled = !pencilEnabled;
+    eraserEnabled = false;
     canvas.style.pointerEvents = pencilEnabled ? 'auto' : 'none';
     pencilButton.textContent = pencilEnabled ? '🛑 Stop Drawing' : '✏️ Pencil';
+    eraserButton.textContent = '🩹 Eraser'; // Reset eraser button text
 });
 
+eraserButton.addEventListener('click', () => {
+    eraserEnabled = !eraserEnabled;
+    pencilEnabled = false;
+    canvas.style.pointerEvents = eraserEnabled ? 'auto' : 'none';
+    eraserButton.textContent = eraserEnabled ? '🛑 Stop Erasing' : '🩹 Eraser';
+    pencilButton.textContent = '✏️ Pencil'; // Reset pencil button text
+});
+
+// Drawing or erasing on canvas
 canvas.addEventListener('mousedown', (e) => {
-    if (!pencilEnabled) return;
+    if (!pencilEnabled && !eraserEnabled) return;
     drawing = true;
     ctx.beginPath();
     ctx.moveTo(e.clientX, e.clientY);
+
+    // Set drawing mode
+    ctx.globalCompositeOperation = eraserEnabled ? 'destination-out' : 'source-over';
+    ctx.lineWidth = eraserEnabled ? 20 : 2; // Eraser is larger
+    ctx.strokeStyle = eraserEnabled ? 'rgba(0,0,0,1)' : 'black'; // Eraser doesn't matter here
+    ctx.lineCap = 'round';
 });
 
 canvas.addEventListener('mousemove', (e) => {
-    if (drawing && pencilEnabled) {
+    if (drawing) {
         ctx.lineTo(e.clientX, e.clientY);
-        ctx.strokeStyle = 'black'; // Change line color here
-        ctx.lineWidth = 2; // Change line width here
-        ctx.lineCap = 'round';
         ctx.stroke();
     }
 });
 
 canvas.addEventListener('mouseup', () => {
-    if (drawing && pencilEnabled) {
-        drawing = false;
-    }
+    drawing = false;
 });
 
 canvas.addEventListener('mouseout', () => {
-    if (drawing && pencilEnabled) {
-        drawing = false;
-    }
+    drawing = false;
 });
