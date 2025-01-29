@@ -94,3 +94,27 @@ body {
     pointer-events: none;
     z-index: 5;
 }
+
+.colorContainer{
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    display: none;
+}
+
+label {
+    margin-right: 10px;
+    font-size: 12px;
+    color: #333;
+}
+
+#colorPicker {
+    width: 30px;
+    height: 30px;
+    border: 0;
+    cursor: pointer;
+    outline: none;
+}

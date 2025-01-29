@@ -1,4 +1,4 @@
-// https://stackoverflow.com/a/76978444/383904
+// Flipbook functionality
 const flipBook = (elBook) => {
     elBook.style.setProperty("--c", 0); // Set current to first page
     elBook.querySelectorAll(".page").forEach((page, i) => {
@@ -15,10 +15,8 @@ document.querySelectorAll(".book").forEach(flipBook);
 const pencilButton = document.getElementById('pencilButton');
 const eraserButton = document.getElementById('eraserButton');
 const homeButton = document.getElementById('homeButton');
-
-homeButton.addEventListener('click', () => {
-    window.location.href = 'select.html'; // Redirect to select.html
-});
+const colorContainer = document.querySelector('.colorContainer');
+const colorPicker = document.getElementById('colorPicker'); 
 
 const canvas = document.getElementById('drawingCanvas');
 const ctx = canvas.getContext('2d');
@@ -35,41 +33,70 @@ window.addEventListener('resize', resizeCanvas);
 let drawing = false;
 let pencilEnabled = false;
 let eraserEnabled = false;
+let selectedColor = '#000000'; // Default color
+
+// Redirect to select page
+homeButton.addEventListener('click', () => {
+    window.location.href = 'select.html';
+});
 
 // Pencil button toggle
 pencilButton.addEventListener('click', () => {
     pencilEnabled = !pencilEnabled;
     eraserEnabled = false;
     canvas.style.pointerEvents = pencilEnabled ? 'auto' : 'none';
-    pencilButton.textContent = pencilEnabled ? '🛑 Stop Drawing' : '✏️ Pencil';
-    eraserButton.textContent = '🩹 Eraser'; // Reset eraser button text
+    pencilButton.textContent = pencilEnabled ? '🛑 Stop Drawing' : '✏️ Draw';
+    eraserButton.textContent = '🩹 Erase'; 
+    colorContainer.style.display = pencilEnabled ? 'flex' : 'none';
 });
 
+// Eraser button toggle
 eraserButton.addEventListener('click', () => {
     eraserEnabled = !eraserEnabled;
     pencilEnabled = false;
     canvas.style.pointerEvents = eraserEnabled ? 'auto' : 'none';
-    eraserButton.textContent = eraserEnabled ? '🛑 Stop Erasing' : '🩹 Eraser';
-    pencilButton.textContent = '✏️ Pencil'; // Reset pencil button text
+    eraserButton.textContent = eraserEnabled ? '🛑 Stop Erasing' : '🩹 Erase';
+    pencilButton.textContent = '✏️ Draw'; 
+
+    colorContainer.style.display = 'none';
 });
+
+// Handle color selection from color picker
+colorPicker.addEventListener('input', (event) => {
+    selectedColor = event.target.value;
+    eraserEnabled = false;
+    pencilEnabled = true;
+    pencilButton.textContent = '🛑 Stop Drawing';
+    eraserButton.textContent = '🩹 Erase';
+});
+
+// Get correct canvas-relative coordinates
+function getMousePos(event) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top
+    };
+}
 
 // Drawing or erasing on canvas
 canvas.addEventListener('mousedown', (e) => {
     if (!pencilEnabled && !eraserEnabled) return;
     drawing = true;
     ctx.beginPath();
-    ctx.moveTo(e.clientX, e.clientY);
+    const pos = getMousePos(e);
+    ctx.moveTo(pos.x, pos.y);
 
-    // Set drawing mode
     ctx.globalCompositeOperation = eraserEnabled ? 'destination-out' : 'source-over';
-    ctx.lineWidth = eraserEnabled ? 20 : 2; // Eraser is larger
-    ctx.strokeStyle = eraserEnabled ? 'rgba(0,0,0,1)' : 'black'; // Eraser doesn't matter here
+    ctx.lineWidth = eraserEnabled ? 20 : 2;
+    ctx.strokeStyle = eraserEnabled ? 'rgba(0,0,0,1)' : selectedColor;
     ctx.lineCap = 'round';
 });
 
 canvas.addEventListener('mousemove', (e) => {
     if (drawing) {
-        ctx.lineTo(e.clientX, e.clientY);
+        const pos = getMousePos(e);
+        ctx.lineTo(pos.x, pos.y);
         ctx.stroke();
     }
 });
