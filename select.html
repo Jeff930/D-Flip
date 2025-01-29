@@ -6,9 +6,6 @@
   <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Include jQuery from node_modules -->
-  <script src="node_modules/jquery/dist/jquery.min.js"></script>
-
   <style>
     * {
       margin: 0;
@@ -30,20 +27,13 @@
       padding: 2vh 1vw;
 
       display: flex;
-      /* Enable flexbox */
       align-items: center;
-      /* Center vertically */
-      /* Center horizontally */
       height: 4vh;
-      /* Set height */
-      /* Add margin between logo and images */
     }
 
     /* Container for the images */
     .image-container {
-      background-image: url('images/background.jpg');
-      background-size: cover;
-      background-repeat: no-repeat;
+      background-color: #3C6D71;
       color: #444;
       font-size: 12px;
       color: #333;
@@ -62,14 +52,14 @@
       width: 24vw;
       height: 70vh;
       margin: 0 15px;
-      border: 5px solid #3C6D71;
+      border: 2px solid #3C6D71;
       border-radius: 10px;
-      /* Add vertical margin */
+      transition: transform 0.3s ease, border-color 0.3s ease; /* Add smooth transition */
     }
 
     .image-container img:hover {
-      border: 5px solid #BEEF62;
-      border-radius: 10px;
+      transform: scale(1.1); /* Enlarge image */
+      border: 2px solid #BEEF62;
     }
 
     .footer-div {
@@ -103,8 +93,6 @@
   <div class="footer-div">
     by Diane V. Facun
   </div>
-
-  <script src="./index.js"></script>
 
 </body>
 
