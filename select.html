@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>D-Flip</title>
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+
+      /* Full viewport height */
+    }
+
+    .logo {
+      width: 10vw;
+      height: 4vh;
+    }
+
+    .logo-div {
+      background-color: #ffffff;
+      padding: 2vh 1vw;
+
+      display: flex;
+      align-items: center;
+      height: 4vh;
+    }
+
+    /* Container for the images */
+    .image-container {
+      background-color: #3C6D71;
+      color: #444;
+      font-size: 12px;
+      color: #333;
+      font-family: 'Oswald', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 92vh;
+      /* Center horizontally */
+    }
+
+
+
+    /* Style for each image */
+    .image-container img {
+      width: 24vw;
+      height: 70vh;
+      margin: 0 15px;
+      border: 2px solid #3C6D71;
+      border-radius: 10px;
+      transition: transform 0.3s ease, border-color 0.3s ease; /* Add smooth transition */
+    }
+
+    .image-container img:hover {
+      transform: scale(1.1); /* Enlarge image */
+      border: 2px solid #BEEF62;
+    }
+
+    .footer-div {
+      /* Your styles for the bottom div */
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background-color: #f0f0f0;
+      padding: 5px;
+      text-align: center;
+    }
+  </style>
+
+
+</head>
+
+<body>
+  <div class="logo-div">
+    <img class="logo" src="images/logo.png" alt="" />
+  </div>
+
+  <!-- Container for the images -->
+  <div class="image-container">
+    <!-- Add three images -->
+    <a href="abelling.html"><img src="images/books/Abelling/cover.jpg" alt="Image 1"></a>
+    <a href="basa.html"><img src="images/books/Basa/cover.jpg" alt="Image 2"></a>
+    <a href="alimango.html"><img src="images/books/Alimango/cover.jpg" alt="Image 3"></a>
+  </div>
+
+  <div class="footer-div">
+    by Diane V. Facun
+  </div>
+
+</body>
+
+</html>

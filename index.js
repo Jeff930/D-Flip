@@ -14,6 +14,12 @@ document.querySelectorAll(".book").forEach(flipBook);
 
 const pencilButton = document.getElementById('pencilButton');
 const eraserButton = document.getElementById('eraserButton');
+const homeButton = document.getElementById('homeButton');
+
+homeButton.addEventListener('click', () => {
+    window.location.href = 'select.html'; // Redirect to select.html
+});
+
 const canvas = document.getElementById('drawingCanvas');
 const ctx = canvas.getContext('2d');
 
