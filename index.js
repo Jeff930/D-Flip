@@ -143,6 +143,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const leftPage = bookElement.querySelector(`.page:nth-child(${currentPageIndex * 2 + 1})`);
             const rightPage = bookElement.querySelector(`.page:nth-child(${currentPageIndex * 2 + 2})`);
 
+            console.log(leftPage);
+            console.log(rightPage);
             if (!leftPage || !rightPage) {
                 alert("Error: Could not find the current pages.");
                 return;
