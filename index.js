@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Identify the left and right page elements (front and back)
             const currentPage = bookElement.style.getPropertyValue("--c"); // Get the current page number
             const pageElement = bookElement.querySelector(`.page:nth-child(${currentPage})`);
-            const pageElement2 = bookElement.querySelector(`.page:nth-child(${currentPage + 1})`);
+            const pageElement2 = bookElement.querySelector(`.page:nth-child(${currentPage * 2 + 1})`);
             if (!pageElement) {
                 alert("Error: Could not find the current page.");
                 return;
@@ -176,8 +176,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const finalCtx = finalCanvas.getContext("2d");
 
             // Draw both pages side by side on the final canvas
-            finalCtx.drawImage(frontPageCanvas, 0, 0);
-            finalCtx.drawImage(backPageCanvas, frontPageCanvas.width, 0);
+            finalCtx.drawImage(backPageCanvas, 0, 0);
+            finalCtx.drawImage(frontPageCanvas, backPageCanvas.width, 0);
 
             // Now capture the drawing canvas and overlay it on top of the book pages
             const updatedDrawingCanvas = document.createElement("canvas");
