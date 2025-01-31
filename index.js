@@ -61,6 +61,14 @@ eraserButton.addEventListener('click', () => {
     colorContainer.style.display = 'none';
 });
 
+document.getElementById('clearButton').addEventListener('click', () => {
+    if (confirm("Are you sure you want to clear all drawings?")) {
+        const canvas = document.getElementById('drawingCanvas');
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+});
+
 // Handle color selection from color picker
 colorPicker.addEventListener('input', (event) => {
     selectedColor = event.target.value;
