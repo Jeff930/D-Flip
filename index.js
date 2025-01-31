@@ -118,7 +118,7 @@ canvas.addEventListener('mouseout', () => {
 });
 
 // Wait for the DOM to load
-ddocument.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
     const saveButton = document.getElementById("saveButton");
 
     if (!saveButton) {
