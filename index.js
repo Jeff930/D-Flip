@@ -118,32 +118,42 @@ canvas.addEventListener('mouseout', () => {
 });
 
 document.getElementById('saveButton').addEventListener('click', () => {
-    const canvas = document.getElementById('drawingCanvas');
-    const ctx = canvas.getContext('2d');
+    const drawingCanvas = document.getElementById('drawingCanvas');
+    const drawingCtx = drawingCanvas.getContext('2d');
     const currentPage = document.querySelector('.page:not([style*="display: none"]) img');
 
-    if (currentPage) {
-        const img = new Image();
-        img.crossOrigin = "anonymous"; // Prevent CORS issues
-        img.src = currentPage.src;
-
-        img.onload = () => {
-            // Clear the canvas first
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Draw the book page first
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-            // Now, merge the drawings on top
-            const link = document.createElement('a');
-            link.href = canvas.toDataURL('image/png');
-            link.download = 'book_page_with_drawing.png';
-            link.click();
-        };
-
-        img.onerror = () => {
-            alert("Error loading image. Ensure it's hosted with proper CORS headers.");
-        };
+    if (!currentPage) {
+        alert("No page found.");
+        return;
     }
+
+    const tempCanvas = document.createElement('canvas');
+    const tempCtx = tempCanvas.getContext('2d');
+
+    // Match the canvas size to the current page image
+    tempCanvas.width = currentPage.width;
+    tempCanvas.height = currentPage.height;
+
+    const img = new Image();
+    img.crossOrigin = "anonymous"; // Prevent CORS issues
+    img.src = currentPage.src;
+
+    img.onload = () => {
+        // Draw the book page on the temporary canvas
+        tempCtx.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
+
+        // Merge the drawing canvas on top
+        tempCtx.drawImage(drawingCanvas, 0, 0, tempCanvas.width, tempCanvas.height);
+
+        // Save the final merged image
+        const link = document.createElement('a');
+        link.href = tempCanvas.toDataURL('image/png');
+        link.download = 'book_page_with_drawing.png';
+        link.click();
+    };
+
+    img.onerror = () => {
+        alert("Error loading image. Ensure it's hosted with proper CORS headers.");
+    };
 });
 
