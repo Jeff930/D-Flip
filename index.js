@@ -118,7 +118,7 @@ canvas.addEventListener('mouseout', () => {
 });
 
 // Wait for the DOM to load
-document.addEventListener("DOMContentLoaded", () => {
+ddocument.addEventListener("DOMContentLoaded", () => {
     const saveButton = document.getElementById("saveButton");
 
     if (!saveButton) {
@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Draw the book screenshot
             finalCtx.drawImage(bookCanvas, 0, 0);
 
-            // Draw the user’s drawing on top
+            // Draw the user’s drawing on top (adjusting size to match bookCanvas)
             finalCtx.drawImage(drawingCanvas, 0, 0, bookCanvas.width, bookCanvas.height);
 
             // Download the final image
@@ -165,4 +165,3 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
-
