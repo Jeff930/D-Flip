@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             // Get the current page index (CSS variable "--c" is used to track the current page)
-            const currentPageIndex = parseInt(bookElement.style.getPropertyValue("--c"));
+            const currentPageIndex = parseInt(bookElement.style.getPropertyValue("--c")) - 1;
 
             // Select the current visible page
             const currentPage = bookElement.querySelector(`.page:nth-child(${currentPageIndex + 1})`);
