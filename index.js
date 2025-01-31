@@ -116,3 +116,34 @@ canvas.addEventListener('mouseup', () => {
 canvas.addEventListener('mouseout', () => {
     drawing = false;
 });
+
+document.getElementById('saveButton').addEventListener('click', () => {
+    const canvas = document.getElementById('drawingCanvas');
+    const ctx = canvas.getContext('2d');
+    const currentPage = document.querySelector('.page:not([style*="display: none"]) img');
+
+    if (currentPage) {
+        const img = new Image();
+        img.crossOrigin = "anonymous"; // Prevent CORS issues
+        img.src = currentPage.src;
+
+        img.onload = () => {
+            // Clear the canvas first
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the book page first
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+            // Now, merge the drawings on top
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = 'book_page_with_drawing.png';
+            link.click();
+        };
+
+        img.onerror = () => {
+            alert("Error loading image. Ensure it's hosted with proper CORS headers.");
+        };
+    }
+});
+
