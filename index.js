@@ -139,40 +139,45 @@ document.addEventListener("DOMContentLoaded", () => {
             // Get the current page index (CSS variable "--c" is used to track the current page)
             const currentPageIndex = parseInt(bookElement.style.getPropertyValue("--c")) - 1;
 
-            // Select the current visible page
-            const currentPage = bookElement.querySelector(`.page:nth-child(${currentPageIndex + 1})`);
+            // Select both left and right pages based on the current index
+            const leftPage = bookElement.querySelector(`.page:nth-child(${currentPageIndex * 2 + 1})`);
+            const rightPage = bookElement.querySelector(`.page:nth-child(${currentPageIndex * 2 + 2})`);
 
-            if (!currentPage) {
-                alert("Error: Could not find the current page.");
+            if (!leftPage || !rightPage) {
+                alert("Error: Could not find the current pages.");
                 return;
             }
 
-            // Capture the current visible page's appearance
-            const bookCanvas = await html2canvas(currentPage, {
-                useCORS: true,  // Helps capture images from external sources
-                scale: 2        // Increases resolution for better quality
+            // Capture both pages (left and right) using html2canvas
+            const leftPageCanvas = await html2canvas(leftPage, {
+                useCORS: true,
+                scale: 2
+            });
+            const rightPageCanvas = await html2canvas(rightPage, {
+                useCORS: true,
+                scale: 2
             });
 
-            // Create a final canvas with the same size as bookCanvas
+            // Create a final canvas to combine both pages
             const finalCanvas = document.createElement("canvas");
-            finalCanvas.width = bookCanvas.width;
-            finalCanvas.height = bookCanvas.height;
+            finalCanvas.width = leftPageCanvas.width + rightPageCanvas.width;
+            finalCanvas.height = Math.max(leftPageCanvas.height, rightPageCanvas.height);
             const finalCtx = finalCanvas.getContext("2d");
 
-            // Draw the book screenshot on the final canvas (the current page)
-            finalCtx.drawImage(bookCanvas, 0, 0);
+            // Draw both pages side by side on the final canvas
+            finalCtx.drawImage(leftPageCanvas, 0, 0);
+            finalCtx.drawImage(rightPageCanvas, leftPageCanvas.width, 0);
 
-            // Manually update the drawing canvas before combining it
+            // Now combine the drawing from the canvas
             const updatedDrawingCanvas = document.createElement("canvas");
             updatedDrawingCanvas.width = drawingCanvas.width;
             updatedDrawingCanvas.height = drawingCanvas.height;
             const updatedCtx = updatedDrawingCanvas.getContext("2d");
 
-            // Copy the content of the drawing canvas to a new one to ensure it's up-to-date
             updatedCtx.drawImage(drawingCanvas, 0, 0);
 
-            // Draw the user’s drawing on top of the current page screenshot
-            finalCtx.drawImage(updatedDrawingCanvas, 0, 0, bookCanvas.width, bookCanvas.height);
+            // Draw the user's drawing on top of the book content
+            finalCtx.drawImage(updatedDrawingCanvas, 0, 0, finalCanvas.width, finalCanvas.height);
 
             // Download the final image
             const link = document.createElement("a");
