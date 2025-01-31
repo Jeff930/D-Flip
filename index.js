@@ -117,43 +117,52 @@ canvas.addEventListener('mouseout', () => {
     drawing = false;
 });
 
-document.getElementById('saveButton').addEventListener('click', () => {
-    const drawingCanvas = document.getElementById('drawingCanvas');
-    const drawingCtx = drawingCanvas.getContext('2d');
-    const currentPage = document.querySelector('.page:not([style*="display: none"]) img');
+// Wait for the DOM to load
+document.addEventListener("DOMContentLoaded", () => {
+    const saveButton = document.getElementById("saveButton");
 
-    if (!currentPage) {
-        alert("No page found.");
+    if (!saveButton) {
+        console.error("Save button not found.");
         return;
     }
 
-    const tempCanvas = document.createElement('canvas');
-    const tempCtx = tempCanvas.getContext('2d');
+    saveButton.addEventListener("click", async () => {
+        const bookElement = document.querySelector(".book");
+        const drawingCanvas = document.getElementById("drawingCanvas");
 
-    // Match the canvas size to the current page image
-    tempCanvas.width = currentPage.width;
-    tempCanvas.height = currentPage.height;
+        if (!bookElement) {
+            alert("Error: .book element not found.");
+            return;
+        }
 
-    const img = new Image();
-    img.crossOrigin = "anonymous"; // Prevent CORS issues
-    img.src = currentPage.src;
+        try {
+            // Capture the book's current appearance
+            const bookCanvas = await html2canvas(bookElement, {
+                useCORS: true,  // Helps capture images from external sources
+                scale: 2        // Increases resolution for better quality
+            });
 
-    img.onload = () => {
-        // Draw the book page on the temporary canvas
-        tempCtx.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
+            // Create a final canvas with the same size as bookCanvas
+            const finalCanvas = document.createElement("canvas");
+            finalCanvas.width = bookCanvas.width;
+            finalCanvas.height = bookCanvas.height;
+            const finalCtx = finalCanvas.getContext("2d");
 
-        // Merge the drawing canvas on top
-        tempCtx.drawImage(drawingCanvas, 0, 0, tempCanvas.width, tempCanvas.height);
+            // Draw the book screenshot
+            finalCtx.drawImage(bookCanvas, 0, 0);
 
-        // Save the final merged image
-        const link = document.createElement('a');
-        link.href = tempCanvas.toDataURL('image/png');
-        link.download = 'book_page_with_drawing.png';
-        link.click();
-    };
+            // Draw the user’s drawing on top
+            finalCtx.drawImage(drawingCanvas, 0, 0, bookCanvas.width, bookCanvas.height);
 
-    img.onerror = () => {
-        alert("Error loading image. Ensure it's hosted with proper CORS headers.");
-    };
+            // Download the final image
+            const link = document.createElement("a");
+            link.href = finalCanvas.toDataURL("image/png");
+            link.download = "book_page_with_drawing.png";
+            link.click();
+        } catch (error) {
+            console.error("Error capturing the book:", error);
+            alert("Failed to capture the book.");
+        }
+    });
 });
 
