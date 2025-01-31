@@ -136,41 +136,45 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            // Get the current page index (CSS variable "--c" is used to track the current page)
-            const currentPageIndex = parseInt(bookElement.style.getPropertyValue("--c")) - 1;
+            // Identify the left and right page elements (front and back)
+            const currentPage = bookElement.style.getPropertyValue("--c") -1; // Get the current page number
+            const pageElement = bookElement.querySelector(`.page:nth-child(${currentPage})`);
 
-            // Select both left and right pages based on the current index
-            const leftPage = bookElement.querySelector(`.page:nth-child(${currentPageIndex * 2 + 1})`);
-            const rightPage = bookElement.querySelector(`.page:nth-child(${currentPageIndex * 2 + 2})`);
-
-            console.log(leftPage);
-            console.log(rightPage);
-            if (!leftPage || !rightPage) {
-                alert("Error: Could not find the current pages.");
+            if (!pageElement) {
+                alert("Error: Could not find the current page.");
                 return;
             }
 
-            // Capture both pages (left and right) using html2canvas
-            const leftPageCanvas = await html2canvas(leftPage, {
+            // Get the front and back page elements
+            const frontPage = pageElement.querySelector(".front");
+            const backPage = pageElement.querySelector(".back");
+
+            if (!frontPage || !backPage) {
+                alert("Error: Could not find the front or back pages.");
+                return;
+            }
+
+            // Capture both the front and back pages using html2canvas
+            const frontPageCanvas = await html2canvas(frontPage, {
                 useCORS: true,
                 scale: 2
             });
-            const rightPageCanvas = await html2canvas(rightPage, {
+            const backPageCanvas = await html2canvas(backPage, {
                 useCORS: true,
                 scale: 2
             });
 
-            // Create a final canvas to combine both pages
+            // Create a final canvas to combine both pages side by side
             const finalCanvas = document.createElement("canvas");
-            finalCanvas.width = leftPageCanvas.width + rightPageCanvas.width;
-            finalCanvas.height = Math.max(leftPageCanvas.height, rightPageCanvas.height);
+            finalCanvas.width = frontPageCanvas.width + backPageCanvas.width;
+            finalCanvas.height = Math.max(frontPageCanvas.height, backPageCanvas.height);
             const finalCtx = finalCanvas.getContext("2d");
 
             // Draw both pages side by side on the final canvas
-            finalCtx.drawImage(leftPageCanvas, 0, 0);
-            finalCtx.drawImage(rightPageCanvas, leftPageCanvas.width, 0);
+            finalCtx.drawImage(frontPageCanvas, 0, 0);
+            finalCtx.drawImage(backPageCanvas, frontPageCanvas.width, 0);
 
-            // Now combine the drawing from the canvas
+            // Now capture the drawing canvas and overlay it on top of the book pages
             const updatedDrawingCanvas = document.createElement("canvas");
             updatedDrawingCanvas.width = drawingCanvas.width;
             updatedDrawingCanvas.height = drawingCanvas.height;
@@ -178,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             updatedCtx.drawImage(drawingCanvas, 0, 0);
 
-            // Draw the user's drawing on top of the book content
+            // Overlay the user's drawing on top of the combined book pages
             finalCtx.drawImage(updatedDrawingCanvas, 0, 0, finalCanvas.width, finalCanvas.height);
 
             // Download the final image
