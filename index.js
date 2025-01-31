@@ -138,8 +138,8 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             // Identify the left and right page elements (front and back)
             const currentPage = bookElement.style.getPropertyValue("--c"); // Get the current page number
-            const pageElement = bookElement.querySelector(`.page:nth-child(${currentPage})`);
-            const pageElement2 = bookElement.querySelector(`.page:nth-child(${currentPage * 2 + 1})`);
+            const pageElement = bookElement.querySelector(`.page:nth-child(${currentPage * 2 -1})`);
+            const pageElement2 = bookElement.querySelector(`.page:nth-child(${currentPage * 2})`);
 
             console.log(pageElement,pageElement2);
             if (!pageElement) {
