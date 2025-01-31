@@ -145,6 +145,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
+            if (!pageElement2) {
+                alert("Error: Could not find the current page 2.");
+                return;
+            }
+
             // Get the front and back page elements
             const frontPage = pageElement2.querySelector(".front");
             const backPage = pageElement.querySelector(".back");
