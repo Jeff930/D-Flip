@@ -140,6 +140,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const currentPage = bookElement.style.getPropertyValue("--c"); // Get the current page number
             const pageElement = bookElement.querySelector(`.page:nth-child(${currentPage})`);
             const pageElement2 = bookElement.querySelector(`.page:nth-child(${currentPage * 2 + 1})`);
+
+            console.log(pageElement,pageElement2);
             if (!pageElement) {
                 alert("Error: Could not find the current page.");
                 return;
