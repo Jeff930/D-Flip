@@ -137,16 +137,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             // Identify the left and right page elements (front and back)
-            const currentPage = bookElement.style.getPropertyValue("--c") - 1; // Get the current page number
+            const currentPage = bookElement.style.getPropertyValue("--c"); // Get the current page number
             const pageElement = bookElement.querySelector(`.page:nth-child(${currentPage})`);
-
+            const pageElement2 = bookElement.querySelector(`.page:nth-child(${currentPage + 1})`);
             if (!pageElement) {
                 alert("Error: Could not find the current page.");
                 return;
             }
 
             // Get the front and back page elements
-            const frontPage = pageElement.querySelector(".front");
+            const frontPage = pageElement2.querySelector(".front");
             const backPage = pageElement.querySelector(".back");
 
             if (!frontPage || !backPage) {
