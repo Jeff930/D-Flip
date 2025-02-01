@@ -23,8 +23,14 @@ const ctx = canvas.getContext('2d');
 
 // Resize canvas to fit the viewport
 function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    const bookElement = document.querySelector(".book");
+    const bookRect = bookElement.getBoundingClientRect();
+    canvas.width = bookRect.width * 2;
+    canvas.height = bookRect.height;
+    canvas.style.width = `${bookRect.width * 2}px`;
+    canvas.style.height = `${bookRect.height}px`;
+    canvas.style.left = `${(bookRect.left - bookRect.width / 2)}px`;
+    canvas.style.top = `${bookRect.top}px`;
 }
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
@@ -120,31 +126,6 @@ canvas.addEventListener('mouseout', () => {
 // Wait for the DOM to load
 document.addEventListener("DOMContentLoaded", () => {
     const saveButton = document.getElementById("saveButton");
-    const drawingCanvas = document.getElementById("drawingCanvas");
-    const bookElement = document.querySelector(".book");
-    const currentPage = bookElement.style.getPropertyValue("--c");
-    console.log(currentPage);
-    const pageElement = bookElement.querySelector(`.page:nth-child(${currentPage * 2 - 1})`);
-    console.log(pageElement);
-    const pageRect = pageElement.getBoundingClientRect();
-
-    if (!drawingCanvas || !bookElement) {
-        console.error("Drawing canvas or book element not found.");
-        return;
-    }
-
-    // Function to resize and position the drawing canvas to match the book
-    function resizeCanvas() {
-        const bookRect = bookElement.getBoundingClientRect();
-        drawingCanvas.style.width = `${bookRect.width * 2}px`;
-        drawingCanvas.style.height = `${bookRect.height}px`;
-        drawingCanvas.style.left = `${pageRect.left}px`;
-        drawingCanvas.style.top = `${pageRect.top}px`;
-    }
-
-    // Call resizeCanvas on load and resize
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
 
     saveButton.addEventListener("click", async () => {
         const bookElement = document.querySelector(".book");
