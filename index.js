@@ -177,8 +177,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const finalCtx = finalCanvas.getContext("2d");
 
             // Draw both pages side by side
-            finalCtx.drawImage(backPageCanvas, 0, 0, pageRect.width / 2, pageRect.height);
-            finalCtx.drawImage(frontPageCanvas, pageRect.width / 2, 0, pageRect.width / 2, pageRect.height);
+            finalCtx.drawImage(backPageCanvas, 0, 0, pageRect.width, pageRect.height);
+            finalCtx.drawImage(frontPageCanvas, pageRect.width, 0, pageRect.width, pageRect.height);
 
             // Capture and overlay the drawing canvas
             if (drawingCanvas) {
