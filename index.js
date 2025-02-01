@@ -159,8 +159,8 @@ document.addEventListener("DOMContentLoaded", () => {
             // Capture front and back pages using html2canvas
             const frontPageCanvas = await html2canvas(frontPage, {
                 useCORS: true,
-                width: bookRect.width, // Half of the book width
-                height: bookRect.height,
+                width: bookRect.width * 2, // Half of the book width
+                height: bookRect.height * 2,
                 scale: 1
             });
 
