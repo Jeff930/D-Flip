@@ -123,7 +123,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const drawingCanvas = document.getElementById("drawingCanvas");
     const bookElement = document.querySelector(".book");
     const currentPage = bookElement.style.getPropertyValue("--c");
+    console.log(currentPage);
     const pageElement = bookElement.querySelector(`.page:nth-child(${currentPage * 2 - 1})`);
+    console.log(pageElement);
     const pageRect = pageElement.getBoundingClientRect();
 
     if (!drawingCanvas || !bookElement) {
