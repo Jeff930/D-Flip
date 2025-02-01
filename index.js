@@ -138,8 +138,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const currentPage = bookElement.style.getPropertyValue("--c");
-            const pageElement = bookElement.querySelector(`.page:nth-child(${currentPage * 2 - 1})`);
-            const pageElement2 = bookElement.querySelector(`.page:nth-child(${currentPage * 2})`);
+            const pageElement = bookElement.querySelector(`.page:nth-child(${currentPage * 2})`);
+            const pageElement2 = bookElement.querySelector(`.page:nth-child(${currentPage * 2 - 1})`);
 
             const pageRect = pageElement.getBoundingClientRect();
 
@@ -148,8 +148,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            const frontPage = pageElement2.querySelector(".front");
-            const backPage = pageElement.querySelector(".back");
+            const backPage = pageElement2.querySelector(".back");
+            const frontPage = pageElement.querySelector(".front");
 
             console.log(currentPage, pageElement, pageElement2, backPage, frontPage)
 
