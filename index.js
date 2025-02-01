@@ -138,6 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const currentPage = bookElement.style.getPropertyValue("--c");
+            console.log(currentPage);
             const pageElement = bookElement.querySelector(`.page:nth-child(${currentPage + 1})`);
             const pageElement2 = bookElement.querySelector(`.page:nth-child(${currentPage})`);
 
