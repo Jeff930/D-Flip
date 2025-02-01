@@ -136,23 +136,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
+            const bookRect = bookElement.getBoundingClientRect(); // Get book dimensions
+
             // Identify the left and right page elements (front and back)
-            const currentPage = bookElement.style.getPropertyValue("--c"); // Get the current page number
-            const pageElement = bookElement.querySelector(`.page:nth-child(${currentPage * 2 -1})`);
+            const currentPage = bookElement.style.getPropertyValue("--c");
+            const pageElement = bookElement.querySelector(`.page:nth-child(${currentPage * 2 - 1})`);
             const pageElement2 = bookElement.querySelector(`.page:nth-child(${currentPage * 2})`);
 
-            console.log(pageElement,pageElement2);
-            if (!pageElement) {
-                alert("Error: Could not find the current page.");
+            if (!pageElement || !pageElement2) {
+                alert("Error: Could not find both pages.");
                 return;
             }
 
-            if (!pageElement2) {
-                alert("Error: Could not find the current page 2.");
-                return;
-            }
-
-            // Get the front and back page elements
             const frontPage = pageElement2.querySelector(".front");
             const backPage = pageElement.querySelector(".back");
 
@@ -161,36 +156,41 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // Capture both the front and back pages using html2canvas
+            // Capture front and back pages using html2canvas
             const frontPageCanvas = await html2canvas(frontPage, {
                 useCORS: true,
-                scale: 2
+                width: bookRect.width / 2, // Half of the book width
+                height: bookRect.height,
+                scale: 1
             });
+
             const backPageCanvas = await html2canvas(backPage, {
                 useCORS: true,
-                scale: 2
+                width: bookRect.width / 2,
+                height: bookRect.height,
+                scale: 1
             });
 
-            // Create a final canvas to combine both pages side by side
+            // Create a final canvas matching the book's dimensions
             const finalCanvas = document.createElement("canvas");
-            finalCanvas.width = frontPageCanvas.width + backPageCanvas.width;
-            finalCanvas.height = Math.max(frontPageCanvas.height, backPageCanvas.height);
+            finalCanvas.width = bookRect.width;
+            finalCanvas.height = bookRect.height;
             const finalCtx = finalCanvas.getContext("2d");
 
-            // Draw both pages side by side on the final canvas
-            finalCtx.drawImage(backPageCanvas, 0, 0);
-            finalCtx.drawImage(frontPageCanvas, backPageCanvas.width, 0);
+            // Draw both pages side by side
+            finalCtx.drawImage(backPageCanvas, 0, 0, bookRect.width / 2, bookRect.height);
+            finalCtx.drawImage(frontPageCanvas, bookRect.width / 2, 0, bookRect.width / 2, bookRect.height);
 
-            // Now capture the drawing canvas and overlay it on top of the book pages
-            const updatedDrawingCanvas = document.createElement("canvas");
-            updatedDrawingCanvas.width = drawingCanvas.width;
-            updatedDrawingCanvas.height = drawingCanvas.height;
-            const updatedCtx = updatedDrawingCanvas.getContext("2d");
+            // Capture and overlay the drawing canvas
+            if (drawingCanvas) {
+                const updatedDrawingCanvas = document.createElement("canvas");
+                updatedDrawingCanvas.width = bookRect.width;
+                updatedDrawingCanvas.height = bookRect.height;
+                const updatedCtx = updatedDrawingCanvas.getContext("2d");
 
-            updatedCtx.drawImage(drawingCanvas, 0, 0);
-
-            // Overlay the user's drawing on top of the combined book pages
-            finalCtx.drawImage(updatedDrawingCanvas, 0, 0, finalCanvas.width, finalCanvas.height);
+                updatedCtx.drawImage(drawingCanvas, 0, 0, bookRect.width, bookRect.height);
+                finalCtx.drawImage(updatedDrawingCanvas, 0, 0, bookRect.width, bookRect.height);
+            }
 
             // Download the final image
             const link = document.createElement("a");
