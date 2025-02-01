@@ -170,6 +170,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 height: pageRect.height,
                 scale: 1
             });
+            console.log(backPageCanvas.getImageData());
+            console.log(frontPageCanvas.getImageData());
 
             // Create a final canvas matching the book's dimensions
             const finalCanvas = document.createElement("canvas");
