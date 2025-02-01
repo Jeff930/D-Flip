@@ -149,8 +149,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            const backPage = pageElement2.querySelector(".back");
-            const frontPage = pageElement.querySelector(".front");
+            const backPage = pageElement2.querySelector(".front");
+            const frontPage = pageElement.querySelector(".back");
 
             console.log(currentPage, pageElement, pageElement2, backPage, frontPage)
 
