@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const saveButton = document.getElementById("saveButton");
     const drawingCanvas = document.getElementById("drawingCanvas");
     const bookElement = document.querySelector(".book");
-    const pageElement = bookElement.querySelector(`.page:nth-child(${currentPage * 2 - 1})`);
+    const pageElement = bookElement.querySelector(`.page`);
     const pageRect = pageElement.getBoundingClientRect();
 
     if (!drawingCanvas || !bookElement) {
