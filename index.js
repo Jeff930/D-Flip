@@ -141,7 +141,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const pageElement = bookElement.querySelector(`.page:nth-child(${currentPage * 2 - 1})`);
             const pageElement2 = bookElement.querySelector(`.page:nth-child(${currentPage * 2})`);
 
-            const pageRect = pageElement.getBoundingClientRect(); // Get book dimensions
+            const pageRect = pageElement.getBoundingClientRect();
+
+            console.log(pageElement, pageElement2, backPage,frontPage)
 
             if (!pageElement || !pageElement2) {
                 alert("Error: Could not find both pages.");
