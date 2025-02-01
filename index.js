@@ -143,8 +143,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const pageRect = pageElement.getBoundingClientRect();
 
-            console.log(pageElement, pageElement2, backPage,frontPage)
-
             if (!pageElement || !pageElement2) {
                 alert("Error: Could not find both pages.");
                 return;
@@ -152,6 +150,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const frontPage = pageElement2.querySelector(".front");
             const backPage = pageElement.querySelector(".back");
+
+            console.log(pageElement, pageElement2, backPage, frontPage)
 
             if (!frontPage || !backPage) {
                 alert("Error: Could not find the front or back pages.");
