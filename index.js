@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Create a final canvas matching the book's dimensions
             const finalCanvas = document.createElement("canvas");
-            finalCanvas.width = pageRect.width;
+            finalCanvas.width = pageRect.width * 2;
             finalCanvas.height = pageRect.height;
             const finalCtx = finalCanvas.getContext("2d");
 
