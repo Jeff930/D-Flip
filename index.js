@@ -120,11 +120,27 @@ canvas.addEventListener('mouseout', () => {
 // Wait for the DOM to load
 document.addEventListener("DOMContentLoaded", () => {
     const saveButton = document.getElementById("saveButton");
+    const drawingCanvas = document.getElementById("drawingCanvas");
+    const bookElement = document.querySelector(".book");
+    const pageRect = pageElement.getBoundingClientRect();
 
-    if (!saveButton) {
-        console.error("Save button not found.");
+    if (!drawingCanvas || !bookElement) {
+        console.error("Drawing canvas or book element not found.");
         return;
     }
+
+    // Function to resize and position the drawing canvas to match the book
+    function resizeCanvas() {
+        const bookRect = bookElement.getBoundingClientRect();
+        drawingCanvas.style.width = `${bookRect.width * 2}px`;
+        drawingCanvas.style.height = `${bookRect.height}px`;
+        drawingCanvas.style.left = `${pageRect.left}px`;
+        drawingCanvas.style.top = `${pageRect.top}px`;
+    }
+
+    // Call resizeCanvas on load and resize
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
 
     saveButton.addEventListener("click", async () => {
         const bookElement = document.querySelector(".book");
