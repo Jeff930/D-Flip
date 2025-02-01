@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 updatedDrawingCanvas.height = pageRect.height;
                 const updatedCtx = updatedDrawingCanvas.getContext("2d");
 
-                updatedCtx.drawImage(drawingCanvas, 0, 0, pageRect.width, pageRect.height);
+                updatedCtx.drawImage(drawingCanvas, 0, 0, pageRect.width * 2, pageRect.height);
                 finalCtx.drawImage(updatedDrawingCanvas, 0, 0, pageRect.width * 2, pageRect.height);
             }
 
