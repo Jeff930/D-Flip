@@ -137,10 +137,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const currentPage = bookElement.style.getPropertyValue("--c");
+            const currentPage = parseInt(bookElement.style.getPropertyValue("--c"), 10);
             console.log(currentPage);
-            const pageElement = bookElement.querySelector(`.page:nth-child(${currentPage + 1})`);
-            const pageElement2 = bookElement.querySelector(`.page:nth-child(${currentPage})`);
+            const pageElement = bookElement.querySelector(`.page:nth-child(${currentPage})`);
+            const pageElement2 = bookElement.querySelector(`.page:nth-child(${currentPage + 1})`);
 
             const pageRect = pageElement.getBoundingClientRect();
 
