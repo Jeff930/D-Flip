@@ -170,8 +170,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 height: pageRect.height,
                 scale: 1
             });
-            console.log(backPageCanvas.getImageData());
-            console.log(frontPageCanvas.getImageData());
 
             // Create a final canvas matching the book's dimensions
             const finalCanvas = document.createElement("canvas");
@@ -186,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Capture and overlay the drawing canvas
             if (drawingCanvas) {
                 const updatedDrawingCanvas = document.createElement("canvas");
-                updatedDrawingCanvas.width = pageRect.width;
+                updatedDrawingCanvas.width = pageRect.width * 2;
                 updatedDrawingCanvas.height = pageRect.height;
                 const updatedCtx = updatedDrawingCanvas.getContext("2d");
 
