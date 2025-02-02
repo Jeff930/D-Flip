@@ -79,7 +79,7 @@ body {
     background: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
-    padding: 10px;
+    padding: 5px;
     cursor: pointer;
     font-size: 10px;
 }
@@ -97,17 +97,17 @@ body {
 
 .colorContainer{
     background-color: white;
-    padding: 10px;
+    padding: 4px;
     border-radius: 5px;
     margin-top: 10px;
-    display: flex;
-    align-items: center;
     display: none;
+    align-items: center;
+    width: 110px;
 }
 
 label {
     margin-right: 10px;
-    font-size: 12px;
+    font-size: 10px;
     color: #333;
 }
 
