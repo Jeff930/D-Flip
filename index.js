@@ -23,8 +23,14 @@ const ctx = canvas.getContext('2d');
 
 // Resize canvas to fit the viewport
 function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    const bookElement = document.querySelector(".book");
+    const bookRect = bookElement.getBoundingClientRect();
+    canvas.width = bookRect.width * 2;
+    canvas.height = bookRect.height;
+    canvas.style.width = `${bookRect.width * 2}px`;
+    canvas.style.height = `${bookRect.height}px`;
+    canvas.style.left = `${(bookRect.left - bookRect.width / 2)}px`;
+    canvas.style.top = `${bookRect.top}px`;
 }
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
@@ -115,4 +121,82 @@ canvas.addEventListener('mouseup', () => {
 
 canvas.addEventListener('mouseout', () => {
     drawing = false;
+});
+
+// Wait for the DOM to load
+document.addEventListener("DOMContentLoaded", () => {
+    const saveButton = document.getElementById("saveButton");
+
+    saveButton.addEventListener("click", async () => {
+        const bookElement = document.querySelector(".book");
+        const drawingCanvas = document.getElementById("drawingCanvas");
+
+        if (!bookElement) {
+            alert("Error: .book element not found.");
+            return;
+        }
+
+        try {
+            const currentPage = parseInt(bookElement.style.getPropertyValue("--c"), 10);
+            console.log(currentPage);
+            const pageElement = bookElement.querySelector(`.page:nth-child(${currentPage})`);
+            const pageElement2 = bookElement.querySelector(`.page:nth-child(${currentPage + 1})`);
+
+            const pageRect = pageElement.getBoundingClientRect();
+
+            if (!pageElement || !pageElement2) {
+                alert("Error: Could not find both pages.");
+                return;
+            }
+
+            const frontPage = pageElement2.querySelector(".front");
+            const backPage = pageElement.querySelector(".back");
+
+            console.log(currentPage, pageElement, pageElement2, backPage, frontPage)
+
+            if (!frontPage || !backPage) {
+                alert("Error: Could not find the front or back pages.");
+                return;
+            }
+
+            // Capture front and back pages using html2canvas
+            const frontPageCanvas = await html2canvas(frontPage, {
+                useCORS: true,
+                width: pageRect.width,
+                height: pageRect.height,
+                scale: 1
+            });
+
+            const backPageCanvas = await html2canvas(backPage, {
+                useCORS: true,
+                width: pageRect.width,
+                height: pageRect.height,
+                scale: 1
+            });
+
+            // Create a final canvas matching the book's dimensions
+            const finalCanvas = document.createElement("canvas");
+            finalCanvas.width = pageRect.width * 2;
+            finalCanvas.height = pageRect.height;
+            const finalCtx = finalCanvas.getContext("2d");
+
+            // Draw both pages side by side
+            finalCtx.drawImage(backPageCanvas, 0, 0, pageRect.width, pageRect.height);
+            finalCtx.drawImage(frontPageCanvas, pageRect.width, 0, pageRect.width, pageRect.height);
+
+            // Capture and overlay the drawing canvas
+            if (drawingCanvas) {
+                finalCtx.drawImage(drawingCanvas, 0, 0, pageRect.width * 2, pageRect.height);
+            }
+
+            // Download the final image
+            const link = document.createElement("a");
+            link.href = finalCanvas.toDataURL("image/png");
+            link.download = "book_page_with_drawing.png";
+            link.click();
+        } catch (error) {
+            console.error("Error capturing the book:", error);
+            alert("Failed to capture the book.");
+        }
+    });
 });
