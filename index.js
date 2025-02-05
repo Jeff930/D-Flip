@@ -43,7 +43,7 @@ let selectedColor = '#000000'; // Default color
 
 // Redirect to select page
 homeButton.addEventListener('click', () => {
-    window.location.href = 'select.html';
+    window.location.href = '../select.html';
 });
 
 // Pencil button toggle
