@@ -16,7 +16,7 @@ const pencilButton = document.getElementById('pencilButton');
 const eraserButton = document.getElementById('eraserButton');
 const homeButton = document.getElementById('homeButton');
 const colorContainer = document.querySelector('.colorContainer');
-const colorPicker = document.getElementById('colorPicker'); 
+const colorPicker = document.getElementById('colorPicker');
 
 const canvas = document.getElementById('drawingCanvas');
 const ctx = canvas.getContext('2d');
@@ -52,7 +52,7 @@ pencilButton.addEventListener('click', () => {
     eraserEnabled = false;
     canvas.style.pointerEvents = pencilEnabled ? 'auto' : 'none';
     pencilButton.textContent = pencilEnabled ? '🛑 Stop Drawing' : '✏️ Draw';
-    eraserButton.textContent = '🩹 Erase'; 
+    eraserButton.textContent = '🩹 Erase';
     colorContainer.style.display = pencilEnabled ? 'flex' : 'none';
 });
 
@@ -62,15 +62,13 @@ eraserButton.addEventListener('click', () => {
     pencilEnabled = false;
     canvas.style.pointerEvents = eraserEnabled ? 'auto' : 'none';
     eraserButton.textContent = eraserEnabled ? '🛑 Stop Erasing' : '🩹 Erase';
-    pencilButton.textContent = '✏️ Draw'; 
+    pencilButton.textContent = '✏️ Draw';
 
     colorContainer.style.display = 'none';
 });
 
 document.getElementById('clearButton').addEventListener('click', () => {
     if (confirm("Are you sure you want to clear all drawings?")) {
-        const canvas = document.getElementById('drawingCanvas');
-        const ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 });
@@ -84,44 +82,57 @@ colorPicker.addEventListener('input', (event) => {
     eraserButton.textContent = '🩹 Erase';
 });
 
-// Get correct canvas-relative coordinates
-function getMousePos(event) {
+// Get correct canvas-relative coordinates (for both mouse and touch)
+function getPosition(event) {
     const rect = canvas.getBoundingClientRect();
-    return {
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top
-    };
+    const x = event.touches ? event.touches[0].clientX - rect.left : event.clientX - rect.left;
+    const y = event.touches ? event.touches[0].clientY - rect.top : event.clientY - rect.top;
+    return { x, y };
 }
 
-// Drawing or erasing on canvas
-canvas.addEventListener('mousedown', (e) => {
+// Drawing or erasing on canvas (Mouse Events)
+canvas.addEventListener('mousedown', (e) => startDrawing(e));
+canvas.addEventListener('mousemove', (e) => draw(e));
+canvas.addEventListener('mouseup', () => stopDrawing());
+canvas.addEventListener('mouseout', () => stopDrawing());
+
+// Drawing or erasing on canvas (Touch Events)
+canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    startDrawing(e);
+});
+canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    draw(e);
+});
+canvas.addEventListener('touchend', () => stopDrawing());
+
+// Start drawing
+function startDrawing(event) {
     if (!pencilEnabled && !eraserEnabled) return;
     drawing = true;
     ctx.beginPath();
-    const pos = getMousePos(e);
+    const pos = getPosition(event);
     ctx.moveTo(pos.x, pos.y);
 
     ctx.globalCompositeOperation = eraserEnabled ? 'destination-out' : 'source-over';
     ctx.lineWidth = eraserEnabled ? 20 : 2;
     ctx.strokeStyle = eraserEnabled ? 'rgba(0,0,0,1)' : selectedColor;
     ctx.lineCap = 'round';
-});
+}
 
-canvas.addEventListener('mousemove', (e) => {
-    if (drawing) {
-        const pos = getMousePos(e);
-        ctx.lineTo(pos.x, pos.y);
-        ctx.stroke();
-    }
-});
+// Draw on canvas
+function draw(event) {
+    if (!drawing) return;
+    const pos = getPosition(event);
+    ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+}
 
-canvas.addEventListener('mouseup', () => {
+// Stop drawing
+function stopDrawing() {
     drawing = false;
-});
-
-canvas.addEventListener('mouseout', () => {
-    drawing = false;
-});
+}
 
 // Wait for the DOM to load
 document.addEventListener("DOMContentLoaded", () => {
@@ -152,7 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const frontPage = pageElement2.querySelector(".front");
             const backPage = pageElement.querySelector(".back");
 
-            console.log(currentPage, pageElement, pageElement2, backPage, frontPage)
+            console.log(currentPage, pageElement, pageElement2, backPage, frontPage);
 
             if (!frontPage || !backPage) {
                 alert("Error: Could not find the front or back pages.");
