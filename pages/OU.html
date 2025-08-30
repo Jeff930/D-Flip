@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D-Flip</title>
+  <link rel="stylesheet" href="../index.css">
+  <link rel="shortcut icon" href="#!" type="image/x-icon">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body>
+
+  <div class="toolbar">
+    <button id="homeButton">🏠 Select Book</button>
+    <button id="pencilButton">✏️ Draw</button>
+    <button id="eraserButton">🩹 Erase</button>
+    <button id="clearButton">🗑️ Clear All</button>
+    <button id="saveButton">💾 Save</button>
+
+    <div class="colorContainer">
+      <label>Active Color:</label>
+      <input type="color" id="colorPicker" value="#000000">
+    </div>
+  </div>
+
+  <div class="book">
+    <!-- Cover & Page 1 -->
+    <div class="page">
+      <div class="front">
+        <img src="../images/books/OU/cover.jpg" alt="" />
+      </div>
+      <div class="back">
+        <img src="../images/books/OU/1.jpg" alt="" />
+      </div>
+    </div>
+
+    <!-- Page 2 & 3 -->
+    <div class="page">
+      <div class="front">
+        <img src="../images/books/OU/2.jpg" alt="" />
+      </div>
+      <div class="back">
+        <img src="../images/books/OU/3.jpg" alt="" />
+      </div>
+    </div>
+
+    <!-- Page 4 & 5 -->
+    <div class="page">
+      <div class="front">
+        <img src="../images/books/OU/4.jpg" alt="" />
+      </div>
+      <div class="back">
+        <img src="../images/books/OU/5.jpg" alt="" />
+      </div>
+    </div>
+
+    <!-- Page 6 & 7 -->
+    <div class="page">
+      <div class="front">
+        <img src="../images/books/OU/6.jpg" alt="" />
+      </div>
+      <div class="back">
+        <img src="../images/books/OU/7.jpg" alt="" />
+      </div>
+    </div>
+
+    <!-- Page 8 & 9 -->
+    <div class="page">
+      <div class="front">
+        <img src="../images/books/OU/8.jpg" alt="" />
+      </div>
+      <div class="back">
+        <img src="../images/books/OU/9.jpg" alt="" />
+      </div>
+    </div>
+
+    <!-- Page 10 & 11 -->
+    <div class="page">
+      <div class="front">
+        <img src="../images/books/OU/10.jpg" alt="" />
+      </div>
+      <div class="back">
+        <img src="../images/books/OU/11.jpg" alt="" />
+      </div>
+    </div>
+  </div>
+
+  <canvas id="drawingCanvas"></canvas>
+
+  <script src="../index.js"></script>
+</body>
+
+</html>
